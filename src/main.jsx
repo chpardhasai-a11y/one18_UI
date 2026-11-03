@@ -5,6 +5,7 @@ import {
   Clock3,
   Cookie,
   FileText,
+  ExternalLink,
   Rss,
   Grid2X2,
   Home,
@@ -28,6 +29,14 @@ import {
   Share2,
   SlidersHorizontal,
   Sparkles,
+  Clapperboard,
+  Play,
+  Pause,
+  Volume2,
+  VolumeX,
+  Heart,
+  ThumbsUp,
+  ThumbsDown,
   Trophy,
   TrendingUp,
   UserRound,
@@ -480,42 +489,60 @@ const storyItems = [
 const baseArticles = [
   {
     title: 'Calcutta High Court advises CPIM on setting up book stalls',
+    category: 'National',
     summary: 'The court advised party representatives on permissions, public access, and local coordination for book stalls.',
+    points: ['The Calcutta High Court addressed plans by CPIM representatives to set up book stalls.', 'The court’s guidance included the permissions needed for arranging the book stalls.', 'Keeping public access in mind was another aspect of the advice given to representatives.', 'Coordination with local authorities also featured in the guidance on setting up stalls.', 'The report brings together the court’s advice on permissions, access, and coordination.'],
+    faqs: [{ question: 'What is the court’s advice about?', answer: 'Permissions, public access, and coordination for setting up book stalls.' }, { question: 'Who is involved?', answer: 'CPIM representatives and the local authorities responsible for permissions and coordination.' }],
     time: '2 hours ago',
     source: 'NEWS18',
     image: 'https://images.unsplash.com/photo-1591291621164-2c6367723315?auto=format&fit=crop&w=900&q=80'
   },
   {
     title: 'Bedroom Vastu: Avoid keeping these 5 items in your bedroom for a happy married life',
+    category: 'Lifestyle',
     summary: 'A quick lifestyle guide looks at simple bedroom choices believed to improve harmony at home.',
+    points: ['The lifestyle guide explores bedroom arrangements through traditional Vastu beliefs.', 'The headline focuses on five items that the guide suggests avoiding in the bedroom.', 'It considers how the objects kept in a bedroom fit within traditional Vastu ideas.', 'The suggestions connect bedroom choices with beliefs about harmony in married life.', 'These traditional suggestions offer no established guarantee of relationship harmony.'],
+    faqs: [{ question: 'What does the guide cover?', answer: 'Bedroom choices and placement of items from a Vastu perspective.' }, { question: 'Are the claimed effects guaranteed?', answer: 'No. These are traditional beliefs, and should not be treated as guarantees about relationship outcomes.' }],
     time: '3 hours ago',
     source: 'NEWS18',
     image: 'https://images.unsplash.com/photo-1616486338812-3dadae4b4ace?auto=format&fit=crop&w=900&q=80'
   },
   {
     title: "Meet The Makkhi Janta Party: India's Newest Satirical Online Movement Amid Delhi Protests",
+    category: 'Trending',
     summary: 'A satirical online movement is gaining attention as protest conversations spill across social platforms.',
+    points: ['The Makkhi Janta Party is presented in the report as a satirical online movement.', 'The movement is drawing attention as conversations about Delhi protests spread online.', 'Its appearance is part of the wider discussion taking place across social platforms.', 'Satire is central to how the movement is described in the article and its headline.', 'The report follows the connection between this online movement and protest conversations.'],
+    faqs: [{ question: 'What is the Makkhi Janta Party?', answer: 'The article describes it as a satirical online movement.' }, { question: 'Why is it being discussed?', answer: 'It has gained attention alongside online conversations about Delhi protests.' }],
     time: '4 hours ago',
     source: 'NEWS18',
     image: 'https://images.unsplash.com/photo-1518005020951-eccb494ad742?auto=format&fit=crop&w=900&q=80'
   },
   {
     title: 'Markets open higher as investors track global cues and commodity reserves',
+    category: 'Markets',
     summary: 'Domestic markets opened on a firm note as investors watched global trends and sector updates.',
+    points: ['Domestic markets opened on a firm note as investors followed the start of the session.', 'The report describes a higher opening while investors kept track of global market cues.', 'Developments in commodity reserves were another area of focus in the market report.', 'Investors were also watching sector updates alongside the broader global market trends.', 'The article brings together the opening market direction and the cues being monitored.'],
+    faqs: [{ question: 'How did markets open?', answer: 'The report describes a higher opening for domestic markets.' }, { question: 'What were investors watching?', answer: 'Global trends, commodity reserves, and updates across sectors.' }],
     time: '5 hours ago',
     source: 'CNBC-TV18',
     image: 'https://images.unsplash.com/photo-1611974789855-9c2a0a7236a3?auto=format&fit=crop&w=900&q=80'
   },
   {
     title: 'Indian startups prepare hiring plans for the festive quarter',
+    category: 'Business',
     summary: 'Several growth-stage companies are planning selective hiring for product, sales, and operations roles.',
+    points: ['Several growth-stage Indian startups are preparing hiring plans for the festive quarter.', 'The report describes selective recruitment plans across the companies being discussed.', 'Product roles are among the positions mentioned in the startups’ plans for recruitment.', 'Sales roles also feature in the hiring plans being prepared for the festive quarter.', 'Operations positions complete the functions highlighted in the report on startup hiring.'],
+    faqs: [{ question: 'Which roles are mentioned?', answer: 'Product, sales, and operations roles are highlighted.' }, { question: 'Is this broad hiring across all startups?', answer: 'The report describes selective hiring plans at several growth-stage companies.' }],
     time: '6 hours ago',
     source: 'MONEYCONTROL',
     image: 'https://images.unsplash.com/photo-1556761175-b413da4baf72?auto=format&fit=crop&w=900&q=80'
   },
   {
     title: 'Local civic teams begin monsoon readiness checks across key wards',
+    category: 'Local',
     summary: 'Local teams started ward-level inspections focused on drains, traffic points, and public safety.',
+    points: ['Local civic teams have started monsoon readiness inspections across several key wards.', 'Drain inspections form part of the ward-level checks described in the preparations.', 'Traffic points are also being checked as civic teams assess readiness for the monsoon.', 'Public safety is another focus of the local inspections being carried out across wards.', 'The report follows civic preparations through checks on drains, traffic, and safety.'],
+    faqs: [{ question: 'What are teams inspecting?', answer: 'Drains, traffic points, and other locations relevant to public safety.' }, { question: 'Why are the checks happening?', answer: 'They are part of local preparations for the monsoon.' }],
     time: '7 hours ago',
     source: 'LOCAL18',
     image: 'https://images.unsplash.com/photo-1516822003754-cca485356ecb?auto=format&fit=crop&w=900&q=80'
@@ -802,42 +829,206 @@ function HeroCard() {
   );
 }
 
-function ArticleCard({ article, featured = false }) {
+function ArticleCard({ article, featured = false, expanded = false, onToggle, onRelatedSelect }) {
+  const [reaction, setReaction] = useState(null);
+  const videoRef = useRef(null);
+  const [videoError, setVideoError] = useState(false);
+  const [videoPlaying, setVideoPlaying] = useState(false);
+
+  useEffect(() => {
+    const video = videoRef.current;
+    if (!video) return;
+    const observer = new IntersectionObserver(([entry]) => {
+      if (!entry.isIntersecting) video.pause();
+    }, { threshold: 0.25 });
+    observer.observe(video);
+    return () => observer.disconnect();
+  }, [article.video]);
+
+  async function toggleVideo() {
+    const video = videoRef.current;
+    if (!video.paused) {
+      video.pause();
+      return;
+    }
+    try {
+      setVideoError(false);
+      await video.play();
+    } catch {
+      setVideoError(true);
+    }
+  }
+
   return (
-    <article className={`article-card ${featured ? 'article-card-featured' : ''}`} style={{ '--delay': `${article.delay}ms` }}>
+    <article id={`article-${article.id}`} className={`article-card ${featured ? 'article-card-featured' : ''} ${article.video ? 'video-post' : ''} ${expanded ? 'is-expanded' : ''}`} style={{ '--delay': `${article.delay}ms` }} onClick={(event) => {
+      if (!event.target.closest('button, a, video, .article-expansion')) onToggle?.();
+    }}>
       <div className="article-image">
-        <img src={article.image} alt="" />
-      </div>
-      <div className="article-body">
-        <h3>{article.title}</h3>
-        {featured && (
+        {article.video ? (
           <>
-            <div className="time-row">
-              <Clock3 size={18} strokeWidth={2.1} />
-              <span>{article.time}</span>
-            </div>
-            <p>{article.summary}</p>
+            <video ref={videoRef} src={article.video} poster={article.image} playsInline preload="none" aria-label={article.title} onPlay={() => setVideoPlaying(true)} onPause={() => setVideoPlaying(false)} onError={() => setVideoError(true)} />
+            <button className={`reel-play ${videoPlaying ? 'is-playing' : ''}`} type="button" onClick={toggleVideo} aria-label={`${videoPlaying ? 'Pause' : 'Play'} ${article.title}`}>
+              {videoPlaying ? <Pause size={28} /> : <Play size={30} fill="currentColor" />}
+            </button>
           </>
-        )}
-        <div className="source-row">
-          <span className="mini-news18">NEWS<span>18</span></span>
-          <span>{article.source}</span>
-          <button className="share-button small" aria-label={`Share ${article.title}`}>
-            <Share2 size={17} strokeWidth={1.9} />
+        ) : <img src={article.image} alt="" />}
+      </div>
+      {videoError && <p className="video-post-error" role="status">This video couldn’t load. Please try again later.</p>}
+      <div className="article-body">
+        <h3><button className="article-expand-toggle" type="button" aria-expanded={expanded} aria-controls={`article-details-${article.id}`} onClick={onToggle}><span>{article.title}</span><ChevronDown size={16} /></button></h3>
+        <div className="article-metadata">
+          <div className="time-row article-time">
+            <Clock3 size={18} strokeWidth={2.1} />
+            <span>{article.time}</span>
+          </div>
+          {featured && <p>{article.summary}</p>}
+          <div className="source-row">
+            <span className="mini-news18">NEWS<span>18</span></span>
+            <span>{article.source}</span>
+            <button className="share-button small" aria-label={`Share ${article.title}`}>
+              <Share2 size={17} strokeWidth={1.9} />
+            </button>
+          </div>
+        <div className="article-reactions" aria-label="Article feedback">
+          <button type="button" aria-label={`Like ${article.title}`} aria-pressed={reaction === 'like'} onClick={() => setReaction(reaction === 'like' ? null : 'like')}>
+            <ThumbsUp size={16} />
           </button>
+          <button type="button" aria-label={`Dislike ${article.title}`} aria-pressed={reaction === 'dislike'} onClick={() => setReaction(reaction === 'dislike' ? null : 'dislike')}>
+            <ThumbsDown size={16} />
+          </button>
+          <button type="button" className="article-mobile-share" aria-label={`Share ${article.title}`}>
+            <Share2 size={18} strokeWidth={1.9} />
+          </button>
+        </div>
+        <span className="article-category-tag">{article.category || (article.id === 'video-travel' ? 'Travel' : 'Auto')}</span>
+        </div>
+      </div>
+      <div id={`article-details-${article.id}`} className="article-expansion" aria-hidden={!expanded} inert={!expanded}>
+        <div className="article-expansion-inner">
+          <ul className="article-summary-points">
+            {(article.points || [article.summary, 'This video is part of the One18 watch selection for stories in your home feed.', 'Tap the play icon on the video above to start watching the complete featured clip.', 'You can pause the video at any point by tapping the video area while it is playing.', 'Explore the similar articles below for more stories from the One18 home feed.']).map((point) => <li key={point}><span>{point}</span></li>)}
+          </ul>
+          <div className="article-source-action">
+            <button type="button" className="read-full-article">Read full article <ExternalLink size={12} /></button>
+          </div>
+          <h4>Frequently asked questions</h4>
+          <div className="article-faqs">
+            {(article.faqs || [{ question: 'What is this video about?', answer: article.summary }, { question: 'How do I watch it?', answer: 'Tap the play icon on the video above. Tap the video again to pause.' }]).map((faq) => (
+              <details key={faq.question}><summary>{faq.question}<ChevronDown size={15} /></summary><p>{faq.answer}</p></details>
+            ))}
+          </div>
+          <h4>Similar articles</h4>
+          <div className="similar-articles" tabIndex={0} aria-label="Scroll for similar articles">
+            {baseArticles.filter((related) => related.title !== article.title).slice(0, 4).map((related) => (
+              <button type="button" className="similar-article" key={related.title} onClick={() => onRelatedSelect?.(related.title)}>
+                <img src={related.image} alt="" loading="lazy" />
+                <span>{related.title}</span>
+                <small>{related.source} · {related.time}</small>
+              </button>
+            ))}
+          </div>
         </div>
       </div>
     </article>
   );
 }
 
+const reels = [
+  { id: 'escape', title: 'A quick escape from the everyday', category: 'Travel', poster: baseArticles[5].image, video: 'https://storage.googleapis.com/gtv-videos-bucket/sample/ForBiggerEscapes.mp4' },
+  { id: 'adventure', title: 'A little adventure, a different perspective', category: 'Discover', poster: baseArticles[2].image, video: 'https://storage.googleapis.com/gtv-videos-bucket/sample/ForBiggerFun.mp4' },
+  { id: 'road', title: 'Life in the fast lane', category: 'Auto', poster: baseArticles[3].image, video: 'https://storage.googleapis.com/gtv-videos-bucket/sample/ForBiggerJoyrides.mp4' }
+];
+
+const videoPosts = [
+  { id: 'video-travel', title: 'Take a break: a new perspective on getting away', summary: 'Watch our travel video pick and explore a change of scene.', time: '1 hour ago', source: 'ONE18', image: baseArticles[5].image, video: reels[0].video, delay: 0 },
+  { id: 'video-auto', title: 'Watch: life on the road, in motion', summary: 'A video pick for your next scroll through the world of auto.', time: '2 hours ago', source: 'ONE18', image: baseArticles[3].image, video: reels[2].video, delay: 0 }
+];
+
+function ReelCard({ reel }) {
+  const videoRef = useRef(null);
+  const [playing, setPlaying] = useState(false);
+  const [muted, setMuted] = useState(true);
+  const [liked, setLiked] = useState(false);
+  const [error, setError] = useState('');
+
+  useEffect(() => {
+    const video = videoRef.current;
+    const observer = new IntersectionObserver(([entry]) => {
+      if (!entry.isIntersecting) video.pause();
+    }, { threshold: 0.5 });
+    observer.observe(video);
+    return () => observer.disconnect();
+  }, []);
+
+  async function togglePlayback() {
+    const video = videoRef.current;
+    if (!video.paused) {
+      video.pause();
+      return;
+    }
+    try {
+      setError('');
+      await video.play();
+    } catch {
+      setError('Video unavailable. Tap to retry.');
+    }
+  }
+
+  return (
+    <article className="reel-card" aria-label={reel.title}>
+      <video ref={videoRef} src={reel.video} poster={reel.poster} preload="none" playsInline loop muted={muted} onPlay={() => setPlaying(true)} onPause={() => setPlaying(false)} onError={() => setError('Video unavailable. Tap to retry.')} />
+      <button className={`reel-play ${playing ? 'is-playing' : ''}`} type="button" onClick={togglePlayback} aria-label={`${playing ? 'Pause' : 'Play'} ${reel.title}`}>
+        {playing ? <Pause size={28} /> : <Play size={30} fill="currentColor" />}
+      </button>
+      <span className="reel-category">{reel.category}</span>
+      <div className="reel-controls">
+        <button type="button" onClick={() => setMuted(!muted)} aria-label={muted ? 'Unmute reel' : 'Mute reel'}>{muted ? <VolumeX size={18} /> : <Volume2 size={18} />}</button>
+        <button type="button" onClick={() => setLiked(!liked)} aria-pressed={liked} aria-label={`Like ${reel.title}`}><Heart size={20} fill={liked ? 'currentColor' : 'none'} /></button>
+      </div>
+      <div className="reel-caption">
+        <span>ONE18 · VIDEOS</span>
+        <h3>{reel.title}</h3>
+        {error && <p role="status">{error}</p>}
+      </div>
+    </article>
+  );
+}
+
+function ReelsFeed() {
+  return (
+    <section className="reels-feed" aria-label="Videos">
+      <div className="reels-heading"><h2><Clapperboard size={20} /> Videos</h2><span>Swipe to explore</span></div>
+      <div className="reels-track" tabIndex={0} aria-label="Swipe or scroll for more videos">
+        {reels.map((reel) => <ReelCard key={reel.id} reel={reel} />)}
+      </div>
+    </section>
+  );
+}
+
 function TopNews() {
   const [batches, setBatches] = useState(2);
+  const [expandedId, setExpandedId] = useState(null);
+  const [viewMode, setViewMode] = useState('card');
   const sentinelRef = useRef(null);
 
   const articles = useMemo(() => {
     return Array.from({ length: batches }, (_, batchIndex) => buildBatch(batchIndex)).flat();
   }, [batches]);
+
+  function toggleArticle(id) {
+    setExpandedId((current) => current === id ? null : id);
+  }
+
+  function openRelated(title) {
+    const related = articles.find((article) => article.title === title);
+    if (!related) return;
+    setExpandedId(related.id);
+    requestAnimationFrame(() => {
+      const card = document.getElementById(`article-${related.id}`);
+      card?.scrollIntoView({ behavior: window.matchMedia('(prefers-reduced-motion: reduce)').matches ? 'instant' : 'smooth', block: 'start' });
+      card?.querySelector('.article-expand-toggle')?.focus({ preventScroll: true });
+    });
+  }
 
   useEffect(() => {
     const node = sentinelRef.current;
@@ -861,19 +1052,26 @@ function TopNews() {
       <div className="section-title-row">
         <h1>Top News</h1>
         <div className="view-toggle" aria-label="View mode">
-          <button className="selected">
+          <button type="button" className={viewMode === 'card' ? 'selected' : ''} aria-label="Card view" aria-pressed={viewMode === 'card'} onClick={() => setViewMode('card')}>
             <Grid2X2 size={19} />
             Card
           </button>
-          <button>
+          <button type="button" className={viewMode === 'list' ? 'selected' : ''} aria-label="List view" aria-pressed={viewMode === 'list'} onClick={() => setViewMode('list')}>
             <List size={20} />
             List
           </button>
         </div>
       </div>
-      <div className="article-grid">
+      <div className={`article-grid ${viewMode === 'list' ? 'feed-list' : ''}`}>
         {articles.map((article, index) => (
-          <ArticleCard article={article} featured={index % 4 === 0} key={article.id} />
+          <React.Fragment key={article.id}>
+            <ArticleCard article={article} featured={index % 4 === 0} expanded={expandedId === article.id} onToggle={() => toggleArticle(article.id)} onRelatedSelect={openRelated} />
+            {index === 2 && <ReelsFeed />}
+            {viewMode === 'card' && (index === 4 || index === 10) && (() => {
+              const video = videoPosts[index === 4 ? 0 : 1];
+              return <ArticleCard article={video} featured expanded={expandedId === video.id} onToggle={() => toggleArticle(video.id)} onRelatedSelect={openRelated} />;
+            })()}
+          </React.Fragment>
         ))}
       </div>
       <div className="feed-sentinel" ref={sentinelRef}>
