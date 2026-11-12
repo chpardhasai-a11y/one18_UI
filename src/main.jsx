@@ -61,10 +61,12 @@ const categories = [
   'Politics'
 ];
 
-const drawerCategories = categories.map((category, index) => ({
-  label: category,
-  active: index === 0
+const categoryLinks = categories.map((label) => ({
+  label,
+  path: label === 'For You' ? '/' : `/${label.toLowerCase().replace(/ & /g, '-').replace(/[^a-z0-9]+/g, '-')}`
 }));
+
+const drawerCategories = categoryLinks;
 
 const categoryIconMap = {
   'For You': Home,
@@ -84,7 +86,7 @@ const categoryIconMap = {
 
 const supportLinks = [
   { label: 'About Us', icon: Info, path: '/about-us' },
-  { label: 'Contact Us', icon: Mail }
+  { label: 'Contact Us', icon: Mail, path: '/contact-us' }
 ];
 
 const legalLinks = [
@@ -95,56 +97,161 @@ const legalLinks = [
 ];
 
 const staticPages = {
-  '/about-us': {
-    eyebrow: 'Company',
-    title: 'About One18',
-    intro:
-      'One Platform. Multiple Perspectives. Endless Stories.',
-    sections: [
+  '/sitemap': {
+    eyebrow: 'Explore',
+    title: 'Sitemap',
+    seoTitle: 'Sitemap | One18',
+    metaDescription: 'Explore One18 news categories, company information and policy pages.',
+    intro: 'Find news categories and useful pages across One18.',
+    linkGroups: [
+      { heading: 'News Categories', links: categoryLinks.map((item) => item.path === '/' ? { label: 'Home', path: '/' } : item) },
+      { heading: 'About & Support', links: supportLinks },
+      { heading: 'Policies & Resources', links: legalLinks }
+    ]
+  },
+  '/contact-us': {
+    "eyebrow": "Company",
+    "title": "Contact Us",
+    "seoTitle": "Contact Us | One18",
+    "metaDescription": "Contact One18 for questions, comments and suggestions. Find corporate and registered office details, grievance contacts and recruitment fraud reporting information.",
+    "intro": "At One18 we are always looking forward to hearing from you.\n\nIf you have any questions, comments, suggestions for us please send them to",
+    "sections": [
       {
-        strong: true,
-        body:
-          'One18 is a next-generation digital news aggregation platform that brings together stories, perspectives, and updates from across India and around the world into one seamless experience.'
+        "heading": "FRAUD-RECRUITMENT ALERT!!!",
+        "body": "Corporate frauds have become rampant and have widely spread over the years. We at Network18 Media & Investments Limited and its Group Companies have observed a trend wherein certain fraudster individuals and companies have been approaching innocent job seekers and promising them lucrative job offers in our group companies. Once a potential applicant is taken into confidence, these fraudsters ask them to make payments to a designated bank account or through mobile payment gateways, after creating scenarios to the actual appointment or interview."
       },
       {
-        body:
-          'Built for a generation that consumes information differently, One18 reimagines how news is discovered, explored, and experienced.'
-      },
-      {
-        body:
-          'With a modern, intuitive, and continuously updated news feed, One18 makes it easier to stay informed about the stories that matter, without the need to navigate multiple websites or platforms.'
-      },
-      {
-        heading: 'What We Do',
-        body:
-          'One18 brings together news and information across categories including politics, business, technology, entertainment, sports, lifestyle, and more.',
-        bullets: [
-          { label: 'News in One Place', text: 'Discover stories from multiple news sources through a unified platform.' },
-          { label: 'Multiple Perspectives', text: 'Explore different viewpoints and coverage of important events.' },
-          { label: 'Seamless Discovery', text: 'Stay updated through an intuitive, infinite-scrolling news feed.' },
-          { label: 'Relevant Content', text: 'Discover stories across topics and interests that matter to you.' },
-          { label: 'Mobile-First Experience', text: 'Enjoy a fast, responsive, and engaging experience across devices.' }
+        "heading": "Here’s how it works:",
+        "bullets": [
+          {
+            "text": "The first payment demands are generally in small amounts so that the aspirant is not alerted and takes it in stride."
+          },
+          {
+            "text": "Once he/she is in the net, the fraudster slowly increases the amount, with the dates coming closer to the designated interview or appointment."
+          },
+          {
+            "text": "There are also trends that have seen them demand large amounts on the pretext of providing an initial start-up kit, for instance a laptop, computer, or some kind of training."
+          },
+          {
+            "text": "Besides money, these fraudsters have reportedly been seeking personal information to process the application. This data is invariably later sold in the market."
+          }
         ]
       },
       {
-        heading: 'Our Vision',
-        body:
-          'To redefine digital news consumption by creating a connected, accessible, and engaging platform where information is easy to discover and diverse perspectives are within everyone\'s reach.'
+        "heading": "Through this Fraud Alert we wish to caution all potential job seekers that Network18 Media & Investments Limited and its Group Companies:",
+        "bullets": [
+          {
+            "text": "Does not charge any job seeker any money or deposit for giving employment offers and interviews or for providing laptop / uniform, etc."
+          },
+          {
+            "text": "Does not appoint any Agent, Agency or Individual to make or issue offers of employment or benefits on its behalf."
+          },
+          {
+            "text": "Does not ask for personal documents like marksheets, PAN Card, Aadhaar Card, CV to be shared through WhatsApp."
+          },
+          {
+            "text": "Does not communicate using personal email IDs like Gmail, Yahoo, Hotmail, Outlook, etc. All official communications related to employment are done using an email address ending with “@nw18.com”."
+          }
+        ],
+        "afterword": "Any job seeker dealing with such an Agency, Employment Portal or Individual will be doing so solely at his or her own risk and Network18 and its Group Companies do not stand responsible for any damages suffered in the process, directly or indirectly.\n\nIt will be in our mutual interest that should there be any suspicious activity pertaining to fraudulent enrolment noticed, it be reported to our Fraud & Misconduct Investigations team at **recruitment.fraud@nw18.com**."
+      }
+    ],
+    "offices": {
+      "corporate": [
+        "Skymark one, Tower-E,",
+        "Sector 98,",
+        "Noida, Uttar Pradesh,",
+        "India. PIN 201303"
+      ],
+      "grievance": [
+        "Apurv Narula,",
+        "Principal Counsel"
+      ],
+      "registered": [
+        "First Floor, Empire Complex,",
+        "414 Senapati Bapat Marg,",
+        "Lower Parel, Mumbai-400013",
+        "Maharashtra, India",
+        "CIN: L65910MH1996PLC280969"
+      ]
+    }
+  },
+  '/about-us': {
+    "eyebrow": "Company",
+    "title": "About One18 – Your News. All in One Place.",
+    "seoTitle": "About One18 | News Aggregator Powered by Network18",
+    "metaDescription": "Discover One18, a news aggregator powered by Network18, bringing together news and updates from participating Network18 news and media brands.",
+    "intro": "One18 is a **digital news platform powered by Network18**, bringing together news and updates from its leading news and media brands in one convenient destination.\n\nFrom breaking news and politics to business, sports, entertainment and regional updates, One18 makes it easier to stay informed about what's happening around you.\n\nWhether you want a quick update on the day's biggest headlines or want to explore a story in detail, One18 offers news summaries, articles, videos and photo galleries to suit the way you consume news.",
+    "sections": [
+      {
+        "heading": "Discover News from Leading Network18 Brands",
+        "body": "One18 brings together content from participating brands within the Network18 news and media ecosystem, giving you access to a wide range of news and information without having to visit multiple websites.\n\nThe Network18 portfolio includes some of India's well-known news and media brands:",
+        "bullets": [
+          {
+            "label": "News18",
+            "text": "Stay updated with national headlines, breaking news, politics, regional developments, sports and entertainment."
+          },
+          {
+            "label": "CNBC-TV18",
+            "text": "Follow business news, corporate developments, financial markets and updates on the Indian economy."
+          },
+          {
+            "label": "Moneycontrol",
+            "text": "Explore stock market news, investment updates, personal finance and business developments."
+          },
+          {
+            "label": "Firstpost",
+            "text": "Discover national and international news, global affairs, politics and current events."
+          },
+          {
+            "label": "Forbes India",
+            "text": "Read about business leadership, entrepreneurship, innovation and emerging industry trends."
+          },
+          {
+            "label": "Storyboard18",
+            "text": "Explore the latest news and insights on advertising, marketing, branding, media, creative campaigns and industry trends."
+          }
+        ],
+        "afterword": "With coverage spanning multiple subjects and regions, One18 helps you discover more stories from across the Network18 ecosystem in one place."
       },
       {
-        heading: 'Our Mission',
-        body:
-          'To simplify how people discover and consume news by bringing together credible sources, relevant stories, and diverse perspectives in a seamless digital experience.'
+        "heading": "Explore News That Matters to You",
+        "body": "Everyone has different interests, and One18 makes it simple to find news that is relevant to you.\n\nBrowse a wide range of categories, including **India News, World News, Politics, Business, Stock Markets, Sports, Entertainment, Technology, Lifestyle, Education and Automobiles**.\n\nWhether you're following an important political development, checking market updates, catching up on cricket or exploring the latest technology trends, One18 helps you stay connected to the topics you care about.\n\nYou can also explore related stories to get additional context and follow important developments as they unfold."
       },
       {
-        heading: 'A New Way to Experience News',
-        body:
-          'The way people consume news is evolving, and One18 is built around that change.\n\nMoving beyond traditional news layouts, One18 offers a feed-first experience designed for continuous discovery. Whether you\'re catching up on the latest headlines, exploring a trending topic, or discovering a new perspective, One18 makes staying informed simple and engaging.\n\nOne18 — Every Story. One Feed.'
+        "heading": "Stay Informed in Your Preferred Language",
+        "body": "News is easier to follow when it's available in a language you're comfortable with.\n\nOne18 brings together multilingual news content, helping readers discover national, international and regional developments in their preferred language.\n\nExplore news in supported languages such as **English, Hindi, Telugu, Tamil, Marathi and Bengali**, making it easier to stay informed about events across India and beyond.\n\nFrom major national headlines to important regional stories, One18 helps you stay connected to the news that matters to your community."
       },
       {
-        heading: 'Get in Touch',
-        body:
-          'We value feedback, ideas, and suggestions that help us improve the One18 experience.\n\nFor queries, feedback, or business enquiries, please reach out to us.\n\nEmail: [Official One18 contact email]\n\nCorporate Office: [Official One18 corporate address]'
+        "heading": "Catch Up Quickly with News Summaries",
+        "body": "You don't always have time to read a full-length news article. One18 makes catching up easier with short, easy-to-read news summaries that highlight the key details of a story.\n\nQuickly understand important developments, browse the latest updates and move between stories without spending too much time searching for information.\n\nWhen a story interests you, explore related coverage or visit the original source for more details."
+      },
+      {
+        "heading": "Read, Watch and Explore",
+        "body": "News isn't limited to text, and neither is One18.\n\nDiscover stories through different content formats based on how you prefer to stay informed.",
+        "bullets": [
+          {
+            "label": "News Articles",
+            "text": "Read headlines, summaries and detailed coverage."
+          },
+          {
+            "label": "Photo Galleries",
+            "text": "Explore important events and stories through images."
+          },
+          {
+            "label": "Videos",
+            "text": "Watch news updates, reports and other video content."
+          },
+          {
+            "label": "Related Stories",
+            "text": "Discover additional coverage and updates on topics that interest you."
+          }
+        ],
+        "afterword": "Whether you prefer reading, watching or browsing, One18 brings different news experiences together in one destination."
+      },
+      {
+        "heading": "News You Can Trace to Its Source",
+        "body": "Knowing where your news comes from is important.\n\nOne18 aggregates content from the Network18 news ecosystem and provides attribution to the original publishing source, helping readers identify the news brand behind each story.\n\nBy bringing together content from established news and media properties, One18 makes it convenient to discover updates across different topics while maintaining visibility of the original publisher."
       }
     ]
   },
@@ -629,7 +736,7 @@ function DrawerSection({ title, children }) {
   );
 }
 
-function MobileDrawer({ open, onClose }) {
+function MobileDrawer({ open, onClose, activeCategory }) {
   useEffect(() => {
     if (!open) return undefined;
 
@@ -673,7 +780,7 @@ function MobileDrawer({ open, onClose }) {
 
         <DrawerSection title="News">
           {drawerCategories.map((item) => (
-            <button className={`drawer-link ${item.active ? 'active' : ''}`} type="button" key={item.label}>
+            <button className={`drawer-link ${item.label === activeCategory ? 'active' : ''}`} type="button" key={item.label} onClick={() => { goToPath(item.path); onClose(); }}>
               <Newspaper size={17} strokeWidth={2.1} />
               <span>{item.label}</span>
             </button>
@@ -704,7 +811,7 @@ function MobileDrawer({ open, onClose }) {
   );
 }
 
-function DesktopSidebar({ collapsed, onToggle }) {
+function DesktopSidebar({ collapsed, onToggle, activeCategory }) {
   return (
     <aside className={`desktop-sidebar ${collapsed ? 'collapsed' : ''}`} aria-label="Desktop navigation">
       <div className="desktop-sidebar-top">
@@ -723,7 +830,7 @@ function DesktopSidebar({ collapsed, onToggle }) {
         {drawerCategories.map((item) => {
           const Icon = categoryIconMap[item.label] || Newspaper;
           return (
-            <button className={`desktop-nav-link ${item.active ? 'active' : ''}`} type="button" key={item.label} title={collapsed ? item.label : undefined}>
+            <button className={`desktop-nav-link ${item.label === activeCategory ? 'active' : ''}`} type="button" key={item.label} title={collapsed ? item.label : undefined} onClick={() => goToPath(item.path)}>
               <Icon size={18} strokeWidth={2.1} />
               <span>{item.label}</span>
             </button>
@@ -755,13 +862,13 @@ function DesktopSidebar({ collapsed, onToggle }) {
   );
 }
 
-function CategoryNav() {
+function CategoryNav({ activeCategory }) {
   return (
     <nav className="category-wrap" aria-label="News categories">
       <div className="category-track">
-        {categories.map((category) => (
-          <button className={`category-tab ${category === 'For You' ? 'active' : ''}`} key={category}>
-            {category}
+        {categoryLinks.map(({ label, path }) => (
+          <button className={`category-tab ${label === activeCategory ? 'active' : ''}`} key={path} onClick={() => goToPath(path)}>
+            {label}
           </button>
         ))}
       </div>
@@ -1005,15 +1112,18 @@ function ReelsFeed() {
   );
 }
 
-function TopNews() {
+function TopNews({ category }) {
   const [batches, setBatches] = useState(2);
   const [expandedId, setExpandedId] = useState(null);
   const [viewMode, setViewMode] = useState('card');
   const sentinelRef = useRef(null);
 
   const articles = useMemo(() => {
-    return Array.from({ length: batches }, (_, batchIndex) => buildBatch(batchIndex)).flat();
-  }, [batches]);
+    const allArticles = Array.from({ length: batches }, (_, batchIndex) => buildBatch(batchIndex)).flat();
+    if (!category) return allArticles;
+    const articleCategory = category === 'Business & Economy' ? 'Business' : category;
+    return allArticles.filter((article) => article.category === articleCategory);
+  }, [batches, category]);
 
   function toggleArticle(id) {
     setExpandedId((current) => current === id ? null : id);
@@ -1032,7 +1142,7 @@ function TopNews() {
 
   useEffect(() => {
     const node = sentinelRef.current;
-    if (!node) return undefined;
+    if (!node || category) return undefined;
 
     const observer = new IntersectionObserver(
       ([entry]) => {
@@ -1050,7 +1160,7 @@ function TopNews() {
   return (
     <section className="top-news">
       <div className="section-title-row">
-        <h1>Top News</h1>
+        <h1>{category || 'Top News'}</h1>
         <div className="view-toggle" aria-label="View mode">
           <button type="button" className={viewMode === 'card' ? 'selected' : ''} aria-label="Card view" aria-pressed={viewMode === 'card'} onClick={() => setViewMode('card')}>
             <Grid2X2 size={19} />
@@ -1066,17 +1176,18 @@ function TopNews() {
         {articles.map((article, index) => (
           <React.Fragment key={article.id}>
             <ArticleCard article={article} featured={index % 4 === 0} expanded={expandedId === article.id} onToggle={() => toggleArticle(article.id)} onRelatedSelect={openRelated} />
-            {index === 2 && <ReelsFeed />}
-            {viewMode === 'card' && (index === 4 || index === 10) && (() => {
+            {!category && index === 2 && <ReelsFeed />}
+            {!category && viewMode === 'card' && (index === 4 || index === 10) && (() => {
               const video = videoPosts[index === 4 ? 0 : 1];
               return <ArticleCard article={video} featured expanded={expandedId === video.id} onToggle={() => toggleArticle(video.id)} onRelatedSelect={openRelated} />;
             })()}
           </React.Fragment>
         ))}
       </div>
-      <div className="feed-sentinel" ref={sentinelRef}>
+      {articles.length === 0 && <p className="category-empty">No stories are available in {category} yet.</p>}
+      {!category && <div className="feed-sentinel" ref={sentinelRef}>
         Loading more stories
-      </div>
+      </div>}
     </section>
   );
 }
@@ -1090,19 +1201,60 @@ function HomeFeed() {
   );
 }
 
+function renderEmphasis(text) {
+  if (typeof text !== 'string') return text;
+  return text.split(/(\*\*[^*]+\*\*|\b[A-Za-z0-9._%+-]+@[A-Za-z0-9.-]+\.[A-Za-z]{2,}\b)/g).map((part, index) => (
+    part.startsWith('**') && part.endsWith('**')
+      ? <strong key={index}>{renderEmphasis(part.slice(2, -2))}</strong>
+      : /^[A-Za-z0-9._%+-]+@[A-Za-z0-9.-]+\.[A-Za-z]{2,}$/.test(part)
+        ? <a key={index} href={`mailto:${part}`}>{part}</a>
+        : part
+  ));
+}
+
 function StaticInfoPage({ page }) {
   return (
     <section className="static-page">
       <div className="static-page-header">
         <p>{page.eyebrow}</p>
         <h1>{page.title}</h1>
-        <span>{page.intro}</span>
+        <span>{renderEmphasis(page.intro)}</span>
       </div>
+
+      {page.linkGroups?.map(({ heading, links }) => (
+        <section className="static-section" key={heading}>
+          <h2>{heading}</h2>
+          <ul className="static-bullets sitemap-links">
+            {links.map(({ label, path }) => <li key={path}><a href={path}>{label}</a></li>)}
+          </ul>
+        </section>
+      ))}
+
+      {page.offices && (
+        <div className="contact-offices">
+          <section className="contact-office contact-office-corporate" aria-labelledby="corporate-office">
+            <h2 id="corporate-office">Corporate Office</h2>
+            <address>
+              {page.offices.corporate.map((line) => <p key={line}>{line}</p>)}
+              <h3>Grievance Officer</h3>
+              {page.offices.grievance.map((line) => <p key={line}>{line}</p>)}
+              <p>Contact detail: <a href="mailto:complaint@nw18.com">complaint@nw18.com</a></p>
+            </address>
+          </section>
+          <section className="contact-office" aria-labelledby="registered-office">
+            <h2 id="registered-office">Registered Office</h2>
+            <address>
+              {page.offices.registered.map((line) => <p key={line}>{line}</p>)}
+              <p>Corporate Communications Telephone : <a href="tel:+912240019000">(+91 22) 40019000</a></p>
+            </address>
+          </section>
+        </div>
+      )}
 
       {page.sections?.map((section) => (
         <article className={`static-section ${section.strong ? 'lead' : ''}`} key={section.heading || section.body}>
           {section.heading && <h2>{section.heading}</h2>}
-          <p>{section.body}</p>
+          {section.body && <p>{renderEmphasis(section.body)}</p>}
           {section.bullets && (
             <ul className="static-bullets">
               {section.bullets.map((item) => (
@@ -1112,6 +1264,7 @@ function StaticInfoPage({ page }) {
               ))}
             </ul>
           )}
+          {section.afterword && <p>{renderEmphasis(section.afterword)}</p>}
         </article>
       ))}
 
@@ -1138,23 +1291,112 @@ function StaticInfoPage({ page }) {
   );
 }
 
+const network18GroupSites = [
+  { label: 'Network18', url: 'https://www.nw18.com/' },
+  { label: 'News18', url: 'https://www.news18.com/' },
+  { label: 'CNBC-TV18', url: 'https://www.cnbctv18.com/' },
+  { label: 'Moneycontrol', url: 'https://www.moneycontrol.com/' },
+  { label: 'Firstpost', url: 'https://www.firstpost.com/' },
+  { label: 'Forbes India', url: 'https://www.forbesindia.com/' },
+  { label: 'Storyboard18', url: 'https://www.storyboard18.com/' }
+];
+
+function AboutFooter({ currentPath }) {
+  return (
+    <footer className="about-footer">
+      <div className="content-shell about-footer-inner">
+        <div className="about-footer-top">
+          <div className="about-footer-brand">
+            <a href="/" aria-label="One18 home"><Logo /></a>
+            <p>Powered by Network18</p>
+          </div>
+          <nav className="about-footer-links" aria-label="Footer navigation">
+            <a href="/">Home</a>
+            {supportLinks.map(({ label, path }) => (
+              <a href={path} key={path} aria-current={currentPath === path ? 'page' : undefined}>{label}</a>
+            ))}
+            {legalLinks.map(({ label, path }) => (
+              <a href={path} key={path}>{label}</a>
+            ))}
+            <a href="/sitemap" aria-current={currentPath === '/sitemap' ? 'page' : undefined}>Sitemap</a>
+          </nav>
+        </div>
+        <div className="about-footer-group">
+          <h2 id="footer-categories">Explore Categories</h2>
+          <nav className="about-footer-links about-footer-group-links" aria-labelledby="footer-categories">
+            {categoryLinks.filter(({ path }) => path !== '/').map(({ label, path }) => (
+              <a href={path} key={path}>{label}</a>
+            ))}
+          </nav>
+        </div>
+        <div className="about-footer-group">
+          <h2 id="network18-group-sites">Network18 Group Sites</h2>
+          <nav className="about-footer-links about-footer-group-links" aria-labelledby="network18-group-sites">
+            {network18GroupSites.map(({ label, url }) => (
+              <a href={url} key={url} target="_blank" rel="noopener noreferrer" aria-label={`${label} (opens in a new tab)`}>
+                {label}
+              </a>
+            ))}
+          </nav>
+        </div>
+        <p className="about-footer-copyright">© Copyright Network18 Media and Investments Ltd 2026. All rights reserved.</p>
+      </div>
+    </footer>
+  );
+}
+
 function App() {
   const [drawerOpen, setDrawerOpen] = useState(false);
   const [sidebarCollapsed, setSidebarCollapsed] = useState(false);
   const currentPath = useCurrentPath();
   const activePage = staticPages[currentPath];
+  const activeCategory = categoryLinks.find(({ path }) => path === currentPath)?.label;
+
+  useEffect(() => {
+    if (!activePage?.seoTitle) return undefined;
+
+    const originalTitle = document.title;
+    document.title = activePage.seoTitle;
+
+    const originalDescription = document.querySelector('meta[name="description"]');
+    const description = originalDescription || document.createElement('meta');
+    const previousDescription = description.getAttribute('content');
+    description.setAttribute('name', 'description');
+    description.setAttribute('content', activePage.metaDescription);
+    if (!originalDescription) document.head.appendChild(description);
+
+    const originalCanonical = document.querySelector('link[rel="canonical"]');
+    const canonical = originalCanonical || document.createElement('link');
+    const previousCanonical = canonical.getAttribute('href');
+    canonical.setAttribute('rel', 'canonical');
+    canonical.setAttribute('href', new URL(currentPath, window.location.origin).href);
+    if (!originalCanonical) document.head.appendChild(canonical);
+
+    return () => {
+      document.title = originalTitle;
+      if (originalDescription) {
+        if (previousDescription === null) description.removeAttribute('content');
+        else description.setAttribute('content', previousDescription);
+      } else description.remove();
+      if (originalCanonical) {
+        if (previousCanonical === null) canonical.removeAttribute('href');
+        else canonical.setAttribute('href', previousCanonical);
+      } else canonical.remove();
+    };
+  }, [activePage, currentPath]);
 
   return (
     <div className={`app-shell ${sidebarCollapsed ? 'sidebar-collapsed' : ''}`}>
       <Header onMenuOpen={() => setDrawerOpen(true)} />
       <main className="app-main">
-        <CategoryNav />
-        <DesktopSidebar collapsed={sidebarCollapsed} onToggle={() => setSidebarCollapsed((current) => !current)} />
+        <CategoryNav activeCategory={activeCategory} />
+        <DesktopSidebar activeCategory={activeCategory} collapsed={sidebarCollapsed} onToggle={() => setSidebarCollapsed((current) => !current)} />
         <div className="content-shell">
-          {activePage ? <StaticInfoPage page={activePage} /> : <HomeFeed />}
+          {activePage ? <StaticInfoPage page={activePage} /> : activeCategory && currentPath !== '/' ? <TopNews key={currentPath} category={activeCategory} /> : <HomeFeed />}
         </div>
       </main>
-      <MobileDrawer open={drawerOpen} onClose={() => setDrawerOpen(false)} />
+      {['/about-us', '/contact-us', '/sitemap'].includes(currentPath) && <AboutFooter currentPath={currentPath} />}
+      <MobileDrawer activeCategory={activeCategory} open={drawerOpen} onClose={() => setDrawerOpen(false)} />
       <nav className="mobile-bottom-nav" aria-label="Mobile navigation">
         <button className="active">
           <Home size={22} />
